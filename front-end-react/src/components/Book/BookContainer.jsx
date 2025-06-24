@@ -7,7 +7,9 @@ import BooksList from "./BooksList";
 import "./book.css";
 
 const PostContainer = () => {
-  const { books, isLoading } = useSelector((state) => state);
+  const { books, isLoading } = useSelector((state) => state.book);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,7 +21,11 @@ const PostContainer = () => {
       <hr className="my-5" />
       <div className="row">
         <div className="col">
-          <BooksList isLoading={isLoading} books={books} />
+          <BooksList
+            isLoading={isLoading}
+            books={books}
+            isLoggedIn={isLoggedIn}
+          />
         </div>
         <div className="col side-line">
           <BookInfo />

@@ -1,6 +1,6 @@
 import React from "react";
 
-const BooksList = ({ isLoading, books }) => {
+const BooksList = ({ isLoading, books, isLoggedIn }) => {
   console.log(books);
 
   const bookList =
@@ -16,7 +16,11 @@ const BooksList = ({ isLoading, books }) => {
                 <button type="button" className="btn btn-primary">
                   Read
                 </button>
-                <button type="button" className="btn btn-danger">
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  disabled={!isLoggedIn}
+                >
                   Delete
                 </button>
               </div>
