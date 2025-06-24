@@ -1,6 +1,6 @@
 import React from "react";
 
-const BooksList = ({ isLoading, books, isLoggedIn }) => {
+const BooksList = ({ isLoading, books, isLoggedIn, dispatch, deleteBook }) => {
   console.log(books);
 
   const bookList =
@@ -20,6 +20,7 @@ const BooksList = ({ isLoading, books, isLoggedIn }) => {
                   type="button"
                   className="btn btn-danger"
                   disabled={!isLoggedIn}
+                  onClick={() => dispatch(deleteBook(item.id))}
                 >
                   Delete
                 </button>
