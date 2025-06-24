@@ -20,7 +20,12 @@ const BooksList = ({ isLoading, books, isLoggedIn, dispatch, deleteBook }) => {
                   type="button"
                   className="btn btn-danger"
                   disabled={!isLoggedIn}
-                  onClick={() => dispatch(deleteBook(item.id))}
+                  onClick={() =>
+                    dispatch(deleteBook(item)).then((data) => {
+                      // i can make model here to suer delete also
+                      console.log(data);
+                    })
+                  }
                 >
                   Delete
                 </button>
