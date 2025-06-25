@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBooks, deleteBook } from "../../Store/bookSlice";
 import BookInfo from "./BookInfo";
@@ -16,6 +16,14 @@ const PostContainer = () => {
     dispatch(getBooks());
   }, [dispatch]);
 
+  const [selectedBook, setSelectedBook] = useState({});
+  const getBookId = (id) => {
+    const selectedBook = books.find((item) => item.id === id);
+    setSelectedBook((prev) => {
+      return { ...prev, ...selectedBook };
+    });
+  };
+
   return (
     <Fragment>
       <hr className="my-5" />
@@ -27,10 +35,11 @@ const PostContainer = () => {
             isLoggedIn={isLoggedIn}
             deleteBook={deleteBook}
             dispatch={dispatch}
+            getBookId={getBookId}
           />
         </div>
         <div className="col side-line">
-          <BookInfo />
+          <BookInfo info={selectedBook} />
         </div>
       </div>
     </Fragment>
