@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { logInsert } from "./reportSlice";
 
 export const getBooks = createAsyncThunk(
   "book/getBooks",
@@ -18,7 +19,7 @@ export const getBooks = createAsyncThunk(
 export const insertBooks = createAsyncThunk(
   "book/insertBooks",
   async (bookData, thunkAPI) => {
-    const { rejectWithValue, getState } = thunkAPI;
+    const { rejectWithValue, getState, dispatch } = thunkAPI;
     try {
       bookData.userName = getState().auth.name;
 
@@ -30,8 +31,10 @@ export const insertBooks = createAsyncThunk(
         },
       });
       const data = await res.json();
+      dispatch(logInsert({ name: "insertBook", status: "success" }));
       return data;
     } catch (error) {
+      dispatch(logInsert({ name: "insertBook", status: "failed" }));
       return rejectWithValue(error.message);
     }
   }
@@ -84,6 +87,8 @@ export const bookSlice = createSlice({
     });
     builder.addCase(insertBooks.fulfilled, (state, action) => {
       state.isLoading = false;
+      console.log(action);
+      
       state.books.push(action.payload);
     });
     builder.addCase(insertBooks.rejected, (state, action) => {

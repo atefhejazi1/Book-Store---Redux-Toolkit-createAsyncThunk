@@ -21,10 +21,16 @@ const BooksList = ({ isLoading, books, isLoggedIn, dispatch, deleteBook }) => {
                   className="btn btn-danger"
                   disabled={!isLoggedIn}
                   onClick={() =>
-                    dispatch(deleteBook(item)).then((data) => {
-                      // i can make model here to suer delete also
-                      console.log(data);
-                    })
+                    dispatch(deleteBook(item))
+                      .unwrap()
+                      .then((originalPromiseResult) => {
+                        // handle result here
+                        console.log(originalPromiseResult);
+                      })
+                      .catch((rejectedValueOrSerializedError) => {
+                        console.log(rejectedValueOrSerializedError);
+                        // handle error here
+                      })
                   }
                 >
                   Delete
